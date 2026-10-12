@@ -1,0 +1,23 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Javed;Akib;;;PhD
+FN:Akib Javed, PhD
+ORG:C4RE International
+TITLE:Hydrology & Geoinformatics Specialist
+TEL;TYPE=CELL,VOICE,PREF:+8801721112202
+EMAIL;TYPE=INTERNET,WORK,PREF:akib.javed@c4rebd.org
+EMAIL;TYPE=INTERNET,HOME:akibjaved@outlook.com
+URL;TYPE=WORK:https://www.c4rebd.org
+item1.URL:https://scholar.google.com/citations?user=9rHfgD4AAAAJ
+item1.X-ABLabel:Google Scholar
+item2.URL:https://www.researchgate.net/profile/Akib-Javed
+item2.X-ABLabel:ResearchGate
+item3.URL:https://orcid.org/0000-0002-1895-0544
+item3.X-ABLabel:ORCID
+item4.URL:https://www.scopus.com/authid/detail.uri?authorId=57208108237
+item4.X-ABLabel:Scopus
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/akibjaved/
+X-SOCIALPROFILE;TYPE=twitter:https://twitter.com/geoakib
+X-SOCIALPROFILE;TYPE=facebook:https://facebook.com/geoakib
+ADR;TYPE=WORK:;;House 104\, Northern Road\, Baridhara DOHS;Dhaka;;1206;Bangladesh
+END:VCARD
