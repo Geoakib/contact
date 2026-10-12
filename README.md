@@ -15,7 +15,7 @@ This repository is optimized for business card QR codes to keep the QR version l
 
 ## How to Deploy to GitHub
 
-1. Create a repository on GitHub (e.g., `contact` or `vcard`).
+1. Repository: [https://github.com/Geoakib/contact](https://github.com/Geoakib/contact)
 2. Push `contact.vcf` and `index.html` to the repository.
 3. In GitHub, go to **Settings** &rarr; **Pages**:
    - Under **Build and deployment** &rarr; **Source**, select **Deploy from a branch**.
@@ -23,11 +23,11 @@ This repository is optimized for business card QR codes to keep the QR version l
    - Click **Save**.
 4. Your digital card will be live at:
    ```
-   https://<your-username>.github.io/<repo-name>/
+   https://geoakib.github.io/contact/
    ```
    And your direct `.vcf` download link will be:
    ```
-   https://<your-username>.github.io/<repo-name>/contact.vcf
+   https://geoakib.github.io/contact/contact.vcf
    ```
 
 ---
@@ -39,13 +39,13 @@ Choose one of the following based on your preferred scan experience:
 
 | Experience | URL to Encode in QR Code | Behavior when Scanned |
 | :--- | :--- | :--- |
-| **Option A (Recommended)** | `https://<username>.github.io/<repo>/` | Opens a sleek mobile card with 1-tap "Save to Contacts", direct WhatsApp, Call, and research links. |
-| **Option B (Instant Prompt)** | `https://<username>.github.io/<repo>/?vcard` | Immediately triggers the phone's "Add to Contacts" download prompt while also showing the profile card. |
-| **Option C (Direct File)** | `https://<username>.github.io/<repo>/contact.vcf` | Direct download of the vCard file. |
+| **Option A (Recommended)** | `https://geoakib.github.io/contact/` | Opens a sleek mobile card with 1-tap "Save to Contacts", direct WhatsApp, Call, and research links. |
+| **Option B (Instant Prompt)** | `https://geoakib.github.io/contact/?vcard` | Immediately triggers the phone's "Add to Contacts" download prompt while also showing the profile card. |
+| **Option C (Direct File)** | `https://geoakib.github.io/contact/contact.vcf` | Direct download of the vCard file. |
 
 > [!CAUTION]
 > **Do NOT use `https://raw.githubusercontent.com/...` in your QR code.**  
-> GitHub Raw serves files with `Content-Type: text/plain`. If scanned, mobile browsers (Safari/Chrome) will display raw code on screen instead of opening the "Add to Contacts" address book dialog. Always use GitHub Pages (`github.io`).
+> GitHub Raw serves files with `Content-Type: text/plain`. If scanned, mobile browsers (Safari/Chrome) will display raw code on screen instead of opening the "Add to Contacts" address book dialog. Always use GitHub Pages (`https://geoakib.github.io/contact/`).
 
 ### 2. QR Code Print Specs
 - **URL Length:** ~30–38 characters.
