@@ -9,7 +9,9 @@ This repository is optimized for business card QR codes to keep the QR version l
 ## Files Included
 
 1. [`contact.vcf`](./contact.vcf) — The RFC-compliant vCard 3.0 file containing full contact information.
-2. [`index.html`](./index.html) — A lightweight, mobile-first digital business card with a 1-tap **"Save to Contacts"** button, direct WhatsApp/Call links, social profiles, and office address.
+2. [`index.html`](./index.html) — A lightweight, mobile-first digital business card with a 1-tap **"Save to Contacts"** button, direct WhatsApp/Call links, CV & Resume PDF downloads, social profiles, and office address.
+3. [`Akib_Javed_CV.pdf`](./Akib_Javed_CV.pdf) — Curriculum Vitae (PDF), downloaded by the **CV** button.
+4. [`Akib_Javed_Resume.pdf`](./Akib_Javed_Resume.pdf) — Résumé (PDF), downloaded by the **Resume** button.
 
 ---
 
