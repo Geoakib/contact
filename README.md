@@ -9,7 +9,7 @@ This repository is optimized for business card QR codes to keep the QR version l
 ## Files Included
 
 1. [`contact.vcf`](./contact.vcf) — The RFC-compliant vCard 3.0 file containing full contact information, including an embedded `PHOTO`.
-2. [`index.html`](./index.html) — A lightweight, mobile-first digital business card with a 1-tap **"Save to Contacts"** button, direct WhatsApp/Call links, CV & Resume PDF downloads, social profiles, and office address.
+2. [`index.html`](./index.html) — A lightweight, mobile-first digital business card with a 1-tap **"Save to Contacts"** button, direct WhatsApp/Call links, CV & Resume PDF downloads, social profiles, and office address. Focus tags: Earth Observation, Spatial Modelling, Remote Sensing, GeoAI.
 3. [`Akib_Javed_CV.pdf`](./Akib_Javed_CV.pdf) — Curriculum Vitae (PDF), downloaded by the **CV** button.
 4. [`Akib_Javed_Resume.pdf`](./Akib_Javed_Resume.pdf) — Résumé (PDF), downloaded by the **Resume** button.
 5. [`icon.png`](./icon.png) — 256×256 portrait, used as the page avatar and as the favicon / apple-touch-icon.
@@ -42,10 +42,14 @@ This repository is optimized for business card QR codes to keep the QR version l
 
 ---
 
-## Short URL (recommended for print)
+## Short URL (optional)
 
 `https://geoakib.github.io/` currently returns GitHub's 404. Creating a **user-site** repository
 fixes that and gives printed cards a shorter, more durable URL.
+
+**Not needed today.** The card is live and the printed QR already encodes the working full URL,
+verified by scanning. Do this only if you want a shorter string on a future print run, or
+protection against renaming the `contact` repository.
 
 1. Create a new repository named exactly **`Geoakib/geoakib.github.io`** — the name must match
    `username.github.io`, which is what makes GitHub serve it at the bare root.
@@ -80,22 +84,23 @@ domain, then point four DNS records at GitHub Pages and tick **Enforce HTTPS**. 
 ## QR Code Recommendations for Visiting Card
 
 ### 1. Which URL to put in your Visiting Card QR Code?
-Once the short-URL repository above exists, encode the short form — it survives a rename of this
-repository and makes a lower-density QR.
+The printed card encodes the **full URL**, which is live and confirmed to scan correctly. The
+optional short form is listed last, for a future print run.
 
 | Experience | URL to Encode in QR Code | Behavior when Scanned |
 | :--- | :--- | :--- |
-| **Option A (Recommended)** | `https://geoakib.github.io/` | Redirects to the card, then 1-tap "Save to Contacts", WhatsApp, Call, research links. |
+| **Option A (in use)** | `https://geoakib.github.io/contact/` | Opens the card: 1-tap "Save to Contacts", WhatsApp, Call, research links. |
 | **Option B (Instant Prompt)** | `https://geoakib.github.io/contact/?vcard` | Immediately triggers the phone's "Add to Contacts" download prompt while also showing the profile card. |
 | **Option C (Direct File)** | `https://geoakib.github.io/contact/contact.vcf` | Direct download of the vCard file. |
+| **Option D (short form)** | `https://geoakib.github.io/` | Requires the redirect repository above. Shorter string, survives a repo rename. |
 
 > [!CAUTION]
 > **Do NOT use `https://raw.githubusercontent.com/...` in your QR code.**  
 > GitHub Raw serves files with `Content-Type: text/plain`. If scanned, mobile browsers (Safari/Chrome) will display raw code on screen instead of opening the "Add to Contacts" address book dialog. Always use GitHub Pages (`https://geoakib.github.io/`).
 
 ### 2. QR Code Print Specs
-- **URL Length:** ~25 characters for the short form, ~38 for the full path.
-- **QR Matrix Version:** **Version 2 (25×25)** or **Version 3 (29×29)** (very low density, wide modules).
+- **URL Length:** 34 characters for the full path (in use), 26 for the short form.
+- **QR Matrix Version:** **Version 3 (29×29)** at error correction **M**, or **Version 4 (33×33)** at **Q** — all in byte mode.
 - **Error Correction:** Level **M (15%)** or **Q (25%)**.
 - **Print Size:** Reads easily even at **15 mm – 24 mm** on paper card stock.
 
