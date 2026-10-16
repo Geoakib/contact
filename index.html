@@ -10,6 +10,18 @@
   <meta property="og:description" content="Hydrology & Geoinformatics Specialist at C4RE International. Save contact or connect.">
   <meta property="og:url" content="https://geoakib.github.io/contact/">
   <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Akib Javed, PhD">
+  <meta property="og:image" content="https://geoakib.github.io/contact/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Akib Javed, PhD - Hydrology & Geoinformatics Specialist">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Akib Javed, PhD | Digital Contact Card">
+  <meta name="twitter:description" content="Hydrology & Geoinformatics Specialist at C4RE International. Save contact or connect.">
+  <meta name="twitter:image" content="https://geoakib.github.io/contact/og-image.jpg">
+  <meta name="theme-color" content="#0B1120">
+  <link rel="icon" type="image/png" sizes="256x256" href="icon.png">
+  <link rel="apple-touch-icon" sizes="256x256" href="icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -55,7 +67,6 @@
       border: 1px solid var(--card-border);
       border-radius: 24px;
       padding: 2rem 1.5rem;
-      backdrop-filter: blur(16px);
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px var(--accent-glow);
       text-align: center;
       animation: fadeIn 0.4s ease-out;
@@ -67,17 +78,14 @@
     }
 
     .avatar-circle {
+      display: block;
       width: 84px;
       height: 84px;
       margin: 0 auto 1.25rem;
       border-radius: 50%;
+      object-fit: cover;
+      /* shows through only if icon.png fails to load */
       background: linear-gradient(135deg, #0284C7, #0EA5E9, #38BDF8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      font-weight: 800;
-      color: #FFFFFF;
       box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.5);
     }
 
@@ -111,7 +119,7 @@
     }
 
     .tag {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 500;
       color: #CBD5E1;
       background: rgba(255, 255, 255, 0.06);
@@ -191,7 +199,7 @@
 
     .section-label {
       text-align: left;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -210,6 +218,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.7rem 0.9rem;
+      min-height: 44px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 12px;
@@ -241,6 +250,14 @@
       color: var(--accent);
     }
 
+    /* Right-hand label on a link row (row type, chevron, or the phone number itself) */
+    .link-meta {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      white-space: nowrap;
+      margin-left: 0.6rem;
+    }
+
     .chips-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -252,6 +269,7 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.65rem 0.75rem;
+      min-height: 44px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 10px;
@@ -277,14 +295,23 @@
     }
 
     .address-card {
+      display: block;
       margin-top: 1.25rem;
       padding: 0.85rem;
       background: rgba(0, 0, 0, 0.2);
+      border: 1px solid transparent;
       border-radius: 12px;
       font-size: 0.75rem;
       color: var(--text-muted);
       line-height: 1.45;
       text-align: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .address-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
     }
 
     .address-card strong {
@@ -292,14 +319,31 @@
       display: block;
       margin-bottom: 0.2rem;
     }
+
+    /* Respect the OS setting: no entry animation, no hover motion. */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* The card is built for a phone; on desktop give it a little more room so it reads as
+       a deliberate design rather than a stretched mobile mockup. */
+    @media (min-width: 900px) {
+      .container {
+        max-width: 520px;
+        padding: 2.5rem 2rem;
+      }
+    }
   </style>
 </head>
 <body>
   <main class="container">
-    <div class="avatar-circle">AJ</div>
+    <img class="avatar-circle" src="icon.png" width="84" height="84" alt="Portrait of Akib Javed" decoding="async">
     <h1 class="name">Akib Javed, PhD</h1>
     <p class="title">Hydrology & Geoinformatics Specialist</p>
-    <p class="org">C4RE International<br><span style="font-size: 0.78rem;">Centre for Research on Environment & People Ltd.</span></p>
+    <p class="org">C4RE International<br><span style="font-size: 0.78rem;">Centre for Research on Environment & People Ltd.</span><br><span style="font-size: 0.78rem;">Dhaka, Bangladesh</span></p>
 
     <div class="tags">
       <span class="tag">Earth Observation</span>
@@ -309,7 +353,7 @@
 
     <!-- Primary CTA: Downloads the contact.vcf directly -->
     <a href="contact.vcf" download="Akib_Javed.vcf" class="cta-save" id="btn-save-vcard">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <svg aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 18v2a2 2 0 002 2h12a2 2 0 002-2v-2"></path>
       </svg>
       Save to Contacts
@@ -318,25 +362,25 @@
     <!-- Quick action buttons + document downloads -->
     <div class="actions-grid">
       <a href="tel:+8801721112202" class="btn-action">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <svg aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
         </svg>
         Call
       </a>
       <a href="https://wa.me/8801721112202" class="btn-action btn-whatsapp" target="_blank" rel="noopener">
-        <svg fill="currentColor" viewBox="0 0 24 24">
+        <svg aria-hidden="true" focusable="false" fill="currentColor" viewBox="0 0 24 24">
           <path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.978-.276-.1-.477-.15-.678.15-.2.301-.778.978-.954 1.179-.175.2-.351.226-.652.075s-1.272-.469-2.424-1.496c-.896-.798-1.501-1.785-1.677-2.086-.175-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.502.1-.2.05-.376-.025-.526-.075-.15-.678-1.633-.929-2.235-.245-.587-.494-.508-.678-.517l-.578-.01c-.2 0-.527.075-.803.376-.276.301-1.054 1.029-1.054 2.509 0 1.48 1.079 2.909 1.229 3.11.15.2 2.124 3.243 5.145 4.549.719.311 1.28.497 1.718.636.722.23 1.379.197 1.898.12.579-.087 1.78-.728 2.031-1.43.251-.702.251-1.304.176-1.43-.076-.126-.277-.201-.578-.351zM12.004 2C6.478 2 1.996 6.478 1.996 12a9.96 9.96 0 001.554 5.352L2 22l4.801-1.517A9.957 9.957 0 0012.004 22C17.53 22 22.008 17.522 22.008 12S17.53 2 12.004 2z"></path>
         </svg>
         WhatsApp
       </a>
       <a href="Akib_Javed_CV.pdf" download="Akib_Javed_CV.pdf" class="btn-action" title="Download CV (PDF)" aria-label="Download CV (PDF)">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <svg aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M7 3h7l5 5v11a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2zM12 11v6m0 0l-2.5-2.5M12 17l2.5-2.5"></path>
         </svg>
         CV
       </a>
       <a href="Akib_Javed_Resume.pdf" download="Akib_Javed_Resume.pdf" class="btn-action" title="Download Resume (PDF)" aria-label="Download Resume (PDF)">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <svg aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M7 3h7l5 5v11a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2zM9 11h6M9 14h6M9 17h4"></path>
         </svg>
         Resume
@@ -346,34 +390,45 @@
     <!-- Communication -->
     <div class="section-label">Contact</div>
     <div class="links-list">
+      <!-- Tel: link so it dials, visible number so it can be read and copied -->
+      <a href="tel:+8801721112202" class="link-row">
+        <span class="link-row-left">
+          <svg aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+          </svg>
+          Phone
+        </span>
+        <span class="link-meta">+880 1721 112202</span>
+      </a>
+
       <a href="mailto:akib.javed@c4rebd.org" class="link-row">
         <span class="link-row-left">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <svg aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
           </svg>
           akib.javed@c4rebd.org
         </span>
-        <span style="color: var(--text-muted); font-size: 0.72rem;">Work</span>
+        <span class="link-meta">Work</span>
       </a>
 
       <a href="mailto:akibjaved@outlook.com" class="link-row">
         <span class="link-row-left">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <svg aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
           </svg>
           akibjaved@outlook.com
         </span>
-        <span style="color: var(--text-muted); font-size: 0.72rem;">Personal</span>
+        <span class="link-meta">Personal</span>
       </a>
 
       <a href="https://www.c4rebd.org" target="_blank" rel="noopener" class="link-row">
         <span class="link-row-left">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <svg aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
           </svg>
           c4rebd.org
         </span>
-        <span style="color: var(--text-muted); font-size: 0.72rem;">&rarr;</span>
+        <span class="link-meta">&rarr;</span>
       </a>
     </div>
 
@@ -381,25 +436,25 @@
     <div class="section-label">Research Profiles</div>
     <div class="chips-grid">
       <a href="https://scholar.google.com/citations?user=9rHfgD4AAAAJ" target="_blank" rel="noopener" class="chip-btn">
-        <svg fill="currentColor" viewBox="0 0 24 24">
+        <svg aria-hidden="true" focusable="false" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"/>
         </svg>
         Google Scholar
       </a>
       <a href="https://www.researchgate.net/profile/Akib-Javed" target="_blank" rel="noopener" class="chip-btn">
-        <svg fill="currentColor" viewBox="0 0 24 24">
+        <svg aria-hidden="true" focusable="false" fill="currentColor" viewBox="0 0 24 24">
           <path d="M19.586 0c-.818 0-1.508.19-2.072.565-.563.377-.97.936-1.213 1.68a3.193 3.193 0 0 0-1.128-1.546A3.17 3.17 0 0 0 13.298.22c-.694 0-1.32.164-1.88.493a4.743 4.743 0 0 0-1.42 1.34 6.786 6.786 0 0 0-.853 1.956c-.198.784-.296 1.636-.296 2.556 0 .937.1 1.802.296 2.593.198.79.482 1.455.853 1.993.37.54.844.954 1.42 1.246.577.29 1.203.437 1.88.437.64 0 1.23-.15 1.773-.448a3.784 3.784 0 0 0 1.353-1.27c.05.59.256 1.05.617 1.38.362.332.854.498 1.477.498.423 0 .807-.08 1.15-.24.344-.16.63-.38.86-.66.23-.28.4-.62.51-1.01.11-.39.17-.81.17-1.26V2.28c0-.7-.223-1.25-.668-1.65C20.43.23 19.82 0 19.01 0h.576zM7.28 14.17H3.45V3.32h3.83c1.23 0 2.21.31 2.94.94.73.62 1.1 1.54 1.1 2.76 0 .61-.1 1.14-.3 1.58-.2.44-.48.81-.84 1.1-.36.3-.79.52-1.3.67-.5.15-1.04.22-1.6.22z"/>
         </svg>
         ResearchGate
       </a>
       <a href="https://orcid.org/0000-0002-1895-0544" target="_blank" rel="noopener" class="chip-btn">
-        <svg fill="currentColor" viewBox="0 0 24 24">
+        <svg aria-hidden="true" focusable="false" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.516.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.306v7.444h2.297c2.359 0 3.844-1.512 3.844-3.722 0-2.012-1.412-3.722-3.797-3.722h-2.344z"/>
         </svg>
         ORCID ID
       </a>
       <a href="https://www.scopus.com/authid/detail.uri?authorId=57208108237" target="_blank" rel="noopener" class="chip-btn">
-        <svg fill="currentColor" viewBox="0 0 24 24">
+        <svg aria-hidden="true" focusable="false" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
         </svg>
         Scopus Profile
@@ -411,40 +466,41 @@
     <div class="links-list">
       <a href="https://www.linkedin.com/in/akibjaved/" target="_blank" rel="noopener" class="link-row">
         <span class="link-row-left">
-          <svg fill="currentColor" viewBox="0 0 24 24">
+          <svg aria-hidden="true" focusable="false" fill="currentColor" viewBox="0 0 24 24">
             <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
           </svg>
           LinkedIn / akibjaved
         </span>
-        <span style="color: var(--text-muted); font-size: 0.72rem;">&rarr;</span>
+        <span class="link-meta">&rarr;</span>
       </a>
 
       <a href="https://twitter.com/geoakib" target="_blank" rel="noopener" class="link-row">
         <span class="link-row-left">
-          <svg fill="currentColor" viewBox="0 0 24 24">
+          <svg aria-hidden="true" focusable="false" fill="currentColor" viewBox="0 0 24 24">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
           </svg>
           X (Twitter) / @geoakib
         </span>
-        <span style="color: var(--text-muted); font-size: 0.72rem;">&rarr;</span>
+        <span class="link-meta">&rarr;</span>
       </a>
 
       <a href="https://facebook.com/geoakib" target="_blank" rel="noopener" class="link-row">
         <span class="link-row-left">
-          <svg fill="currentColor" viewBox="0 0 24 24">
+          <svg aria-hidden="true" focusable="false" fill="currentColor" viewBox="0 0 24 24">
             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
           </svg>
           Facebook / geoakib
         </span>
-        <span style="color: var(--text-muted); font-size: 0.72rem;">&rarr;</span>
+        <span class="link-meta">&rarr;</span>
       </a>
     </div>
 
-    <div class="address-card">
+    <a class="address-card" target="_blank" rel="noopener"
+       href="https://www.google.com/maps/search/?api=1&amp;query=House+104,+Northern+Road,+Baridhara+DOHS,+Dhaka+1206,+Bangladesh">
       <strong>OFFICE</strong>
       House 104, Northern Road, Baridhara DOHS<br>
       Dhaka-1206, Bangladesh
-    </div>
+    </a>
   </main>
 
   <script>
