@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Generate the digital card's image assets and refresh the vCard PHOTO field.
 
-    python tools/make_assets.py          regenerate icon.png, og-image.png, contact.vcf PHOTO
+    python tools/make_assets.py          regenerate icon.png, og-image.jpg, contact.vcf PHOTO
     python tools/make_assets.py --check  verify the artefacts on disk, write nothing
 
-Rerun this after replacing Akib_Javed_Photo_Square.png, or after changing a name/title
-string below. Pillow only, no other dependency. The assertions at the bottom are the check:
-they fail loudly if the framing overflows, the vCard photo is truncated, or the .vcf grows
-past the size contact importers tolerate.
+Rerun this after replacing 35-45.jpg, or after changing a name/title string below.
+Pillow only, no other dependency. The assertions at the bottom are the check: they fail loudly
+if the framing overflows, the vCard photo is truncated, or the .vcf grows past the size that
+contact importers tolerate.
 """
 
 from __future__ import annotations
@@ -21,26 +21,26 @@ from pathlib import Path
 from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "Akib_Javed_Photo_Square.png"
+SOURCE = ROOT / "35-45.jpg"
 ICON = ROOT / "icon.png"
 OG = ROOT / "og-image.jpg"
 VCF = ROOT / "contact.vcf"
 
-# Framing inside the 960x960 cut-out. Keeps the head centred with a little headroom so the
-# same crop works as a tab icon, a round avatar, and a vCard thumbnail.
-CROP = (100, 0, 860, 760)
+# Square crop of the 413x531 headshot: the top square, nudged down so the hair sits flush to
+# the top edge and the beard is not clipped at the bottom. Framed this way the head fills the
+# frame at any size, which is what a round avatar, a tab icon and a vCard thumbnail all want.
+CROP = (0, 28, 413, 441)
 
 NAME = "Akib Javed, PhD"
 TITLE_LINES = ("Hydrology &", "Geoinformatics Specialist")
 ORG = "C4RE International"
 
-# Palette, lifted from index.html's :root and .avatar-circle.
+# Palette, lifted from index.html's :root.
 BG = (11, 17, 32)               # --bg              #0B1120
 ACCENT = (14, 165, 233)         # --accent          #0EA5E9
 ACCENT_BRIGHT = (56, 189, 248)  # --accent-hover    #38BDF8
 MUTED = (148, 163, 184)         # --text-muted      #94A3B8
 MAIN = (248, 250, 252)          # --text-main       #F8FAFC
-GRAD = ((2, 132, 199), (14, 165, 233), (56, 189, 248))  # 135deg gradient stops
 
 FONT_DIR = Path("C:/Windows/Fonts")
 FONT_FILES = {
@@ -67,29 +67,11 @@ def font(weight: str, size: int) -> ImageFont.FreeTypeFont:
     raise SystemExit(f"make_assets: no usable {weight} font in {FONT_DIR}")
 
 
-def diagonal_gradient(size: int) -> Image.Image:
-    """135deg blend of the three avatar stops. A 2x2 corner image resized up is smooth
-    enough at these sizes and needs no per-pixel loop."""
-    small = Image.new("RGB", (2, 2))
-    small.putpixel((0, 0), GRAD[0])
-    small.putpixel((1, 0), GRAD[1])
-    small.putpixel((0, 1), GRAD[1])
-    small.putpixel((1, 1), GRAD[2])
-    return small.resize((size, size), Image.Resampling.BILINEAR)
-
-
 def portrait(size: int) -> Image.Image:
-    """The cut-out, cropped and resized to a square, alpha intact."""
-    src = Image.open(SOURCE).convert("RGBA").crop(CROP)
+    """The headshot, cropped square and resized. It carries its own white background, so
+    there is nothing to composite behind it — unlike the transparent cut-out it replaced."""
+    src = Image.open(SOURCE).convert("RGB").crop(CROP)
     return src.resize((size, size), Image.Resampling.LANCZOS)
-
-
-def portrait_on_gradient(size: int) -> Image.Image:
-    """Opaque square: brand gradient with the portrait over it. Used for the favicon and the
-    vCard photo, both of which need something behind a transparent cut-out."""
-    base = diagonal_gradient(size).convert("RGBA")
-    base.alpha_composite(portrait(size))
-    return base.convert("RGB")
 
 
 def glow(canvas: Image.Image, centre: tuple[int, int], radius: int, colour, alpha: int) -> None:
@@ -108,7 +90,7 @@ def glow(canvas: Image.Image, centre: tuple[int, int], radius: int, colour, alph
 
 
 def build_icon() -> None:
-    portrait_on_gradient(256).save(ICON, "PNG", optimize=True)
+    portrait(256).save(ICON, "PNG", optimize=True)
 
 
 def build_og() -> None:
@@ -120,8 +102,7 @@ def build_og() -> None:
     glow(canvas, (0, 0), int(w * 0.62), ACCENT, 38)          # rgba(14,165,233,.15)
     glow(canvas, (w, h), int(w * 0.62), ACCENT_BRIGHT, 26)   # rgba(56,189,248,.10)
 
-    disc = diagonal_gradient(340 * s).convert("RGBA")
-    disc.alpha_composite(portrait(340 * s))
+    disc = portrait(340 * s).convert("RGBA")
     circle = Image.new("L", disc.size, 0)
     ImageDraw.Draw(circle).ellipse((0, 0, disc.size[0] - 1, disc.size[1] - 1), fill=255)
     disc.putalpha(circle)
@@ -156,7 +137,7 @@ def build_og() -> None:
 
 def photo_b64() -> str:
     buf = io.BytesIO()
-    portrait_on_gradient(PHOTO_PX).save(buf, "JPEG", quality=PHOTO_QUALITY, optimize=True)
+    portrait(PHOTO_PX).save(buf, "JPEG", quality=PHOTO_QUALITY, optimize=True)
     return base64.b64encode(buf.getvalue()).decode("ascii")
 
 
@@ -218,6 +199,12 @@ def main() -> None:
         return
     if not SOURCE.exists():
         raise SystemExit(f"make_assets: missing source photo {SOURCE}")
+    with Image.open(SOURCE) as src:
+        # A replaced photo is the likeliest way CROP silently goes wrong: it would crop the
+        # wrong region or paste a short image into a long box instead of failing.
+        assert src.size[0] >= CROP[2] and src.size[1] >= CROP[3], (
+            f"make_assets: crop {CROP} does not fit {SOURCE.name} {src.size} — adjust CROP"
+        )
     build_icon()
     build_og()
     b64 = photo_b64()

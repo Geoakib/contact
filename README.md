@@ -124,8 +124,9 @@ python tools/make_assets.py          # rewrites icon.png, og-image.jpg and the v
 python tools/make_assets.py --check  # verifies the committed files, writes nothing
 ```
 
-The script reads `Akib_Javed_Photo_Square.png` (960×960, transparent background) from the
-repository root — that source photo is deliberately **not** committed, so keep it alongside your
-local clone. Run `--check` before committing: it fails if the framing overflows, the vCard
-photo is truncated or the wrong size, or the files drift past the size limits that contact
-importers and link crawlers tolerate.
+The script reads `35-45.jpg` (413×531 headshot) from the repository root and crops it to the
+square set by `CROP` in the script. That source photo is deliberately **not** committed: this
+repository is published by GitHub Pages, so committing it would serve your full-resolution
+photograph from a public URL. Keep it alongside your local clone instead. Run `--check` before
+committing: it fails if the framing overflows, the vCard photo is truncated or the wrong size,
+or the files drift past the size limits that contact importers and link crawlers tolerate.
