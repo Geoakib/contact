@@ -79,11 +79,12 @@
 
     .avatar-circle {
       display: block;
-      width: 84px;
-      height: 84px;
+      width: 110px;
+      height: 110px;
       margin: 0 auto 1.25rem;
       border-radius: 50%;
       object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.12);
       /* shows through only if icon.png fails to load */
       background: linear-gradient(135deg, #0284C7, #0EA5E9, #38BDF8);
       box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.5);
@@ -320,6 +321,32 @@
       margin-bottom: 0.2rem;
     }
 
+    .qr-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+    }
+
+    .qr-box img {
+      display: block;
+      width: 200px;
+      height: 200px;
+      padding: 6px;
+      background: #FFFFFF;
+      border-radius: 10px;
+    }
+
+    .qr-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
     /* Respect the OS setting: no entry animation, no hover motion. */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -337,10 +364,39 @@
       }
     }
   </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Akib Javed",
+      "honorificSuffix": "PhD",
+      "jobTitle": "Hydrology & Geoinformatics Specialist",
+      "url": "https://geoakib.github.io/contact/",
+      "image": "https://geoakib.github.io/contact/icon.png",
+      "email": "akib.javed@c4rebd.org",
+      "telephone": "+8801721112202",
+      "worksFor": { "@type": "Organization", "name": "C4RE International" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "House 104, Northern Road, Baridhara DOHS",
+        "addressLocality": "Dhaka",
+        "postalCode": "1206",
+        "addressCountry": "BD"
+      },
+      "sameAs": [
+        "https://scholar.google.com/citations?user=9rHfgD4AAAAJ",
+        "https://orcid.org/0000-0002-1895-0544",
+        "https://www.scopus.com/authid/detail.uri?authorId=57208108237",
+        "https://www.researchgate.net/profile/Akib-Javed",
+        "https://www.linkedin.com/in/akibjaved/",
+        "https://twitter.com/geoakib"
+      ]
+    }
+  </script>
 </head>
 <body>
   <main class="container">
-    <img class="avatar-circle" src="icon.png" width="84" height="84" alt="Portrait of Akib Javed" decoding="async">
+    <img class="avatar-circle" src="icon.png" width="110" height="110" alt="Portrait of Akib Javed" decoding="async">
     <h1 class="name">Akib Javed, PhD</h1>
     <p class="title">Hydrology & Geoinformatics Specialist</p>
     <p class="org">C4RE International<br><span style="font-size: 0.78rem;">Centre for Research on Environment & People Ltd.</span><br><span style="font-size: 0.78rem;">Dhaka, Bangladesh</span></p>
@@ -386,6 +442,15 @@
         </svg>
         Resume
       </a>
+    </div>
+
+    <!-- Scan to save: static QR encoding contact.vcf, for a second device -->
+    <div class="section-label">Scan to Save Contact</div>
+    <div class="qr-box">
+      <a href="contact.vcf" download="Akib_Javed.vcf" aria-label="Save contact vCard">
+        <img src="contact-qr.png" width="200" height="200" alt="QR code linking to the contact vCard" loading="lazy" decoding="async">
+      </a>
+      <p class="qr-hint">Point a phone camera here to save my contact card</p>
     </div>
 
     <!-- Communication -->

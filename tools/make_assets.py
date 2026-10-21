@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Generate the digital card's image assets and refresh the vCard PHOTO field.
 
-    python tools/make_assets.py          regenerate icon.png, og-image.jpg, contact.vcf PHOTO
+    python tools/make_assets.py          regenerate icon.png, og-image.jpg, contact-qr.png, contact.vcf PHOTO
     python tools/make_assets.py --check  verify the artefacts on disk, write nothing
 
 Rerun this after replacing 35-45.jpg, or after changing a name/title string below.
-Pillow only, no other dependency. The assertions at the bottom are the check: they fail loudly
-if the framing overflows, the vCard photo is truncated, or the .vcf grows past the size that
-contact importers tolerate.
+Pillow + qrcode, no other dependency. The assertions at the bottom are the check: they fail loudly
+if the framing overflows, the vCard photo is truncated, the QR payload drifts, or the .vcf grows
+past the size that contact importers tolerate.
 """
 
 from __future__ import annotations
@@ -19,11 +19,14 @@ import sys
 from pathlib import Path
 
 from PIL import Image, ImageChops, ImageDraw, ImageFont
+import qrcode
+from qrcode.constants import ERROR_CORRECT_M
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "35-45.jpg"
 ICON = ROOT / "icon.png"
 OG = ROOT / "og-image.jpg"
+QR = ROOT / "contact-qr.png"
 VCF = ROOT / "contact.vcf"
 
 # Square crop of the 413x531 headshot: the top square, nudged down so the hair sits flush to
@@ -57,6 +60,14 @@ PHOTO_QUALITY = 88
 OG_MAX = 300_000         # WhatsApp silently drops link thumbnails heavier than this
 VCF_PHOTO_MAX = 30_000   # base64 chars
 VCF_MAX = 40_960         # whole file
+
+# The card's scannable twin: a static QR of the .vcf URL, so a second phone can save the
+# contact with the page closed. GitHub Pages serves contact.vcf as text/x-vcard, which is what
+# makes iOS and Android offer "Add Contact" on scan rather than dumping a text file.
+QR_URL = "https://geoakib.github.io/contact/contact.vcf"
+QR_MODULES = 33   # version 4 at this URL length; a drifted payload changes the count
+QR_BOX = 12       # px per module -> 492px square, drawn 1:1, no resampling
+QR_BORDER = 4     # quiet zone, in modules — scanners need it
 
 
 def font(weight: str, size: int) -> ImageFont.FreeTypeFont:
@@ -135,6 +146,28 @@ def build_og() -> None:
     )
 
 
+def qr_image() -> Image.Image:
+    """The QR as a PIL image. Deterministic for fixed parameters, which is what lets verify()
+    compare the committed file against a fresh render byte for byte."""
+    qr = qrcode.QRCode(error_correction=ERROR_CORRECT_M, box_size=QR_BOX, border=QR_BORDER)
+    qr.add_data(QR_URL)
+    qr.make(fit=True)
+    assert qr.modules_count == QR_MODULES, (
+        f"QR is {qr.modules_count} modules, expected {QR_MODULES} — QR_URL changed length"
+    )
+    return qr.make_image(fill_color="#0EA5E9", back_color="white").convert("RGB")
+
+
+def png_bytes(im: Image.Image) -> bytes:
+    buf = io.BytesIO()
+    im.save(buf, "PNG", optimize=True)
+    return buf.getvalue()
+
+
+def build_qr() -> None:
+    QR.write_bytes(png_bytes(qr_image()))
+
+
 def photo_b64() -> str:
     buf = io.BytesIO()
     portrait(PHOTO_PX).save(buf, "JPEG", quality=PHOTO_QUALITY, optimize=True)
@@ -168,6 +201,11 @@ def verify(b64: str | None = None) -> None:
     og_bytes = OG.stat().st_size
     assert og_bytes <= OG_MAX, f"og-image is {og_bytes:,}B, over the {OG_MAX:,}B crawler limit"
 
+    side = (QR_MODULES + 2 * QR_BORDER) * QR_BOX
+    with Image.open(QR) as im:
+        assert im.size == (side, side), f"{QR.name} is {im.size}, expected {(side, side)}"
+    assert QR.read_bytes() == png_bytes(qr_image()), "contact-qr.png is stale — rerun make_assets"
+
     raw = VCF.read_text(encoding="utf-8")
     assert raw.count("BEGIN:VCARD") == 1 and raw.count("END:VCARD") == 1, "unbalanced vCard"
     assert "VERSION:3.0" in raw, "vCard version changed"
@@ -189,7 +227,7 @@ def verify(b64: str | None = None) -> None:
     assert size <= VCF_MAX, f"contact.vcf is {size} bytes"
     print(
         f"ok  icon.png {ICON.stat().st_size:,}B  {OG.name} {OG.stat().st_size:,}B  "
-        f"photo {len(encoded):,}B b64  contact.vcf {size:,}B"
+        f"{QR.name} {QR.stat().st_size:,}B  photo {len(encoded):,}B b64  contact.vcf {size:,}B"
     )
 
 
@@ -197,6 +235,8 @@ def main() -> None:
     if "--check" in sys.argv:
         verify()
         return
+    # The QR needs no source photo, so it is rebuilt even when 35-45.jpg is absent.
+    build_qr()
     if not SOURCE.exists():
         raise SystemExit(f"make_assets: missing source photo {SOURCE}")
     with Image.open(SOURCE) as src:
