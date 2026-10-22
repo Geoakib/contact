@@ -9,20 +9,19 @@ This repository is optimized for business card QR codes to keep the QR version l
 ## Files Included
 
 1. [`contact.vcf`](./contact.vcf) — The RFC-compliant vCard 3.0 file containing full contact information, including an embedded `PHOTO`.
-2. [`index.html`](./index.html) — A lightweight, mobile-first digital business card with a 1-tap **"Save to Contacts"** button, a **Scan to Save Contact** QR, direct WhatsApp/Call links, CV & Resume PDF downloads, social profiles, and office address. Focus tags: Earth Observation, Spatial Modelling, Remote Sensing, GeoAI.
+2. [`index.html`](./index.html) — A lightweight, mobile-first digital business card with a 1-tap **"Save to Contacts"** button, direct WhatsApp/Call links, CV & Resume PDF downloads, social profiles, and office address. Focus tags: Earth Observation, Spatial Modelling, Remote Sensing, GeoAI.
 3. [`Akib_Javed_CV.pdf`](./Akib_Javed_CV.pdf) — Curriculum Vitae (PDF), downloaded by the **CV** button.
 4. [`Akib_Javed_Resume.pdf`](./Akib_Javed_Resume.pdf) — Résumé (PDF), downloaded by the **Resume** button.
 5. [`icon.png`](./icon.png) — 256×256 portrait, used as the page avatar and as the favicon / apple-touch-icon.
 6. [`og-image.jpg`](./og-image.jpg) — 1200×630 link-preview thumbnail for WhatsApp, Telegram, LinkedIn and X.
-7. [`contact-qr.png`](./contact-qr.png) — Static QR of the `.vcf` URL, shown in the page's **Scan to Save Contact** block so a second phone can save the contact with this page closed.
-8. [`tools/make_assets.py`](./tools/make_assets.py) — Regenerates `icon.png`, `og-image.jpg`, `contact-qr.png` and the vCard `PHOTO` (see below).
+7. [`tools/make_assets.py`](./tools/make_assets.py) — Regenerates `icon.png`, `og-image.jpg` and the vCard `PHOTO` (see below).
 
 ---
 
 ## How to Deploy to GitHub
 
 1. Repository: [https://github.com/Geoakib/contact](https://github.com/Geoakib/contact)
-2. Push `contact.vcf`, `index.html`, `icon.png`, `og-image.jpg`, `contact-qr.png` and the PDFs to the repository.
+2. Push `contact.vcf`, `index.html`, `icon.png`, `og-image.jpg` and the PDFs to the repository.
 3. In GitHub, go to **Settings** &rarr; **Pages**:
    - Under **Build and deployment** &rarr; **Source**, select **Deploy from a branch**.
    - Select `main` branch and `/ (root)`.
@@ -38,7 +37,7 @@ This repository is optimized for business card QR codes to keep the QR version l
 
 > [!NOTE]
 > The page is served from the repository, so a file that is not committed is not published.
-> `icon.png`, `og-image.jpg` and `contact-qr.png` **must be committed**, or the avatar, the link preview and the on-page QR break.
+> `icon.png` and `og-image.jpg` **must be committed**, or the avatar and the link preview break.
 > The large source photos stay untracked on purpose — they are working files, not site assets.
 
 ---
@@ -92,7 +91,7 @@ optional short form is listed last, for a future print run.
 | :--- | :--- | :--- |
 | **Option A (in use)** | `https://geoakib.github.io/contact/` | Opens the card: 1-tap "Save to Contacts", WhatsApp, Call, research links. |
 | **Option B (Instant Prompt)** | `https://geoakib.github.io/contact/?vcard` | Immediately triggers the phone's "Add to Contacts" download prompt while also showing the profile card. |
-| **Option C (Direct File)** | `https://geoakib.github.io/contact/contact.vcf` | Direct download of the vCard file. **This is the URL the page's own "Scan to Save Contact" QR encodes.** |
+| **Option C (Direct File)** | `https://geoakib.github.io/contact/contact.vcf` | Direct download of the vCard file. |
 | **Option D (short form)** | `https://geoakib.github.io/` | Requires the redirect repository above. Shorter string, survives a repo rename. |
 
 > [!CAUTION]
@@ -121,14 +120,13 @@ contact will disagree.
 **Regenerating the images** (after replacing the photo, or changing a name or job title):
 
 ```bash
-python tools/make_assets.py          # rewrites icon.png, og-image.jpg, contact-qr.png and the vCard PHOTO
+python tools/make_assets.py          # rewrites icon.png, og-image.jpg and the vCard PHOTO
 python tools/make_assets.py --check  # verifies the committed files, writes nothing
 ```
 
 The script reads `35-45.jpg` (413×531 headshot) from the repository root and crops it to the
 square set by `CROP` in the script. That source photo is deliberately **not** committed: this
 repository is published by GitHub Pages, so committing it would serve your full-resolution
-photograph from a public URL. Keep it alongside your local clone instead. (`contact-qr.png` needs
-no source photo, so it is rebuilt even when `35-45.jpg` is absent.) Run `--check` before
+photograph from a public URL. Keep it alongside your local clone instead. Run `--check` before
 committing: it fails if the framing overflows, the vCard photo is truncated or the wrong size,
 or the files drift past the size limits that contact importers and link crawlers tolerate.
